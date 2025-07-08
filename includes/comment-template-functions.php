@@ -157,7 +157,7 @@ function ccr_custom_comment_form_defaults( $defaults ) {
  */
 function ccr_list_comments() {
     // Check if comments are open or if there are comments.
-    if ( comments_open() || get_comments_number() ) :
+    if ( comments_open() || get_comments_number() ) {
         ?>
         <div id="ccr-comments-area" class="ccr-comments-area">
             <h2 class="ccr-comments-title">
@@ -183,7 +183,7 @@ function ccr_list_comments() {
                 ?>
             </h2>
 
-            <?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
+            <?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) { // Are there comments to navigate through? ?>
             <nav id="ccr-comment-nav-above" class="ccr-navigation ccr-comment-navigation" role="navigation">
                 <h3 class="ccr-screen-reader-text"><?php esc_html_e( 'Comment navigation', 'custom-comments-reviews' ); ?></h3>
                 <div class="ccr-nav-links">
@@ -191,7 +191,7 @@ function ccr_list_comments() {
                     <div class="ccr-nav-next"><?php next_comments_link( esc_html__( 'Newer Comments', 'custom-comments-reviews' ) ); ?></div>
                 </div><!-- .nav-links -->
             </nav><!-- #comment-nav-above -->
-            <?php endif; // Check for comment navigation. ?>
+            <?php } // Check for comment navigation. ?>
 
             <ol class="ccr-comment-list">
                 <?php
@@ -205,7 +205,7 @@ function ccr_list_comments() {
                 ?>
             </ol><!-- .comment-list -->
 
-            <?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
+            <?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) { // Are there comments to navigate through? ?>
             <nav id="ccr-comment-nav-below" class="ccr-navigation ccr-comment-navigation" role="navigation">
                 <h3 class="ccr-screen-reader-text"><?php esc_html_e( 'Comment navigation', 'custom-comments-reviews' ); ?></h3>
                 <div class="ccr-nav-links">
@@ -213,16 +213,16 @@ function ccr_list_comments() {
                     <div class="ccr-nav-next"><?php next_comments_link( esc_html__( 'Newer Comments', 'custom-comments-reviews' ) ); ?></div>
                 </div><!-- .nav-links -->
             </nav><!-- #comment-nav-below -->
-            <?php endif; // Check for comment navigation. ?>
+            <?php } // Check for comment navigation. ?>
 
         </div><!-- #comments -->
         <?php
-    endif;
+    } // End of if ( comments_open() || get_comments_number() )
 
     // If comments are closed and there are comments, let's leave a little note, shall we?
-    if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :
+    if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) {
         echo '<p class="ccr-no-comments">' . esc_html__( 'Comments are closed.', 'custom-comments-reviews' ) . '</p>';
-    endif;
+    } // End of if ( ! comments_open() && ... )
 
     // Display the comment form.
     // We will use our custom defaults if the filter is enabled.
