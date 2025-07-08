@@ -57,7 +57,6 @@ function ccr_comment_display_callback( $comment, $args, $depth ) {
                     ccr_display_like_dislike_buttons( get_comment_ID() );
                 }
 
-                <?php
                 // WooCommerce review stars
                 if ( function_exists( 'ccr_is_woocommerce_product_page' ) && ccr_is_woocommerce_product_page() && get_comment_type() == 'review' ) {
                     // WooCommerce uses a filter on 'comment_text' or its own templates to add stars.
@@ -73,7 +72,7 @@ function ccr_comment_display_callback( $comment, $args, $depth ) {
                         <?php
                     }
                 }
-                ?>
+                // No closing ?> here as we are still in the main PHP block of the function
             </div>
 
             <div class="ccr-reply">
