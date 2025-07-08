@@ -158,65 +158,78 @@ function ccr_custom_comment_form_defaults( $defaults ) {
 function ccr_list_comments() {
     // Check if comments are open or if there are comments.
     if ( comments_open() || get_comments_number() ) {
-        ?>
-        <div id="ccr-comments-area" class="ccr-comments-area">
-            <h2 class="ccr-comments-title">
-                <?php
-                $comments_number = get_comments_number();
-                if ( '1' === $comments_number ) {
-                    /* translators: %s: post title */
-                    printf( _x( 'One thought on &ldquo;%s&rdquo;', 'comments title', 'custom-comments-reviews' ), get_the_title() );
-                } else {
-                    printf(
-                        /* translators: 1: number of comments, 2: post title */
-                        _nx(
-                            '%1$s thought on &ldquo;%2$s&rdquo;',
-                            '%1$s thoughts on &ldquo;%2$s&rdquo;',
-                            $comments_number,
-                            'comments title',
-                            'custom-comments-reviews'
-                        ),
-                        number_format_i18n( $comments_number ),
-                        get_the_title()
-                    );
-                }
-                ?>
-            </h2>
+        echo '<div id="ccr-comments-area" class="ccr-comments-area">';
 
-            <?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) { // Are there comments to navigate through? ?>
-            <nav id="ccr-comment-nav-above" class="ccr-navigation ccr-comment-navigation" role="navigation">
-                <h3 class="ccr-screen-reader-text"><?php esc_html_e( 'Comment navigation', 'custom-comments-reviews' ); ?></h3>
-                <div class="ccr-nav-links">
-                    <div class="ccr-nav-previous"><?php previous_comments_link( esc_html__( 'Older Comments', 'custom-comments-reviews' ) ); ?></div>
-                    <div class="ccr-nav-next"><?php next_comments_link( esc_html__( 'Newer Comments', 'custom-comments-reviews' ) ); ?></div>
-                </div><!-- .nav-links -->
-            </nav><!-- #comment-nav-above -->
-            <?php } // Check for comment navigation. ?>
+        echo '<h2 class="ccr-comments-title">';
+        $comments_number = get_comments_number();
+        if ( '1' === $comments_number ) {
+            /* translators: %s: post title */
+            printf( _x( 'One thought on &ldquo;%s&rdquo;', 'comments title', 'custom-comments-reviews' ), get_the_title() );
+        } else {
+            printf(
+                /* translators: 1: number of comments, 2: post title */
+                _nx(
+                    '%1$s thought on &ldquo;%2$s&rdquo;',
+                    '%1$s thoughts on &ldquo;%2$s&rdquo;',
+                    $comments_number,
+                    'comments title',
+                    'custom-comments-reviews'
+                ),
+                number_format_i18n( $comments_number ),
+                get_the_title()
+            );
+        }
+        echo '</h2>';
 
-            <ol class="ccr-comment-list">
-                <?php
-                wp_list_comments( array(
-                    'style'       => 'ol', // ol, ul, div
-                    'short_ping'  => true,
-                    'avatar_size' => 50,
-                    'callback'    => 'ccr_comment_display_callback', // Our custom callback
-                    'max_depth'   => '', // Handled by WordPress
-                ) );
-                ?>
-            </ol><!-- .comment-list -->
+        if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) { // Are there comments to navigate through?
+            echo '<nav id="ccr-comment-nav-above" class="ccr-navigation ccr-comment-navigation" role="navigation">';
+            echo '<h3 class="ccr-screen-reader-text">' . esc_html__( 'Comment navigation', 'custom-comments-reviews' ) . '</h3>';
+            echo '<div class="ccr-nav-links">';
 
-            <?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) { // Are there comments to navigate through? ?>
-            <nav id="ccr-comment-nav-below" class="ccr-navigation ccr-comment-navigation" role="navigation">
-                <h3 class="ccr-screen-reader-text"><?php esc_html_e( 'Comment navigation', 'custom-comments-reviews' ); ?></h3>
-                <div class="ccr-nav-links">
-                    <div class="ccr-nav-previous"><?php previous_comments_link( esc_html__( 'Older Comments', 'custom-comments-reviews' ) ); ?></div>
-                    <div class="ccr-nav-next"><?php next_comments_link( esc_html__( 'Newer Comments', 'custom-comments-reviews' ) ); ?></div>
-                </div><!-- .nav-links -->
-            </nav><!-- #comment-nav-below -->
-            <?php } // Check for comment navigation. ?>
+            $prev_link = get_previous_comments_link( esc_html__( 'Older Comments', 'custom-comments-reviews' ) );
+            if ($prev_link) {
+                echo '<div class="ccr-nav-previous">' . $prev_link . '</div>';
+            }
 
-        </div><!-- #comments -->
-        <?php
+            $next_link = get_next_comments_link( esc_html__( 'Newer Comments', 'custom-comments-reviews' ) );
+            if ($next_link) {
+                echo '<div class="ccr-nav-next">' . $next_link . '</div>';
+            }
+
+            echo '</div><!-- .nav-links -->';
+            echo '</nav><!-- #comment-nav-above -->';
+        } // Check for comment navigation.
+
+        echo '<ol class="ccr-comment-list">';
+        wp_list_comments( array(
+            'style'       => 'ol', // ol, ul, div
+            'short_ping'  => true,
+            'avatar_size' => 50,
+            'callback'    => 'ccr_comment_display_callback', // Our custom callback
+            'max_depth'   => '', // Handled by WordPress
+        ) );
+        echo '</ol><!-- .comment-list -->';
+
+        if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) { // Are there comments to navigate through?
+            echo '<nav id="ccr-comment-nav-below" class="ccr-navigation ccr-comment-navigation" role="navigation">';
+            echo '<h3 class="ccr-screen-reader-text">' . esc_html__( 'Comment navigation', 'custom-comments-reviews' ) . '</h3>';
+            echo '<div class="ccr-nav-links">';
+
+            $prev_link_below = get_previous_comments_link( esc_html__( 'Older Comments', 'custom-comments-reviews' ) );
+            if ($prev_link_below) {
+                echo '<div class="ccr-nav-previous">' . $prev_link_below . '</div>';
+            }
+
+            $next_link_below = get_next_comments_link( esc_html__( 'Newer Comments', 'custom-comments-reviews' ) );
+            if ($next_link_below) {
+                echo '<div class="ccr-nav-next">' . $next_link_below . '</div>';
+            }
+
+            echo '</div><!-- .nav-links -->';
+            echo '</nav><!-- #comment-nav-below -->';
+        } // Check for comment navigation.
+
+        echo '</div><!-- #comments -->';
     } // End of if ( comments_open() || get_comments_number() )
 
     // If comments are closed and there are comments, let's leave a little note, shall we?
