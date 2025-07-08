@@ -25,7 +25,7 @@ function ccr_comment_display_callback( $comment, $args, $depth ) {
         <article id="div-comment-<?php comment_ID(); ?>" class="ccr-comment-body">
             <footer class="ccr-comment-meta">
                 <div class="ccr-comment-author-avatar">
-                    <?php if ( 0 != $args['avatar_size'] ) echo get_avatar( $comment, $args['avatar_size'] ); ?>
+                    <?php if ( 0 != $args['avatar_size'] ) { echo get_avatar( $comment, $args['avatar_size'] ); } ?>
                 </div>
                 <div class="ccr-comment-author-info">
                     <span class="ccr-comment-author-name"><?php printf( esc_html__( '%s says:', 'custom-comments-reviews' ), get_comment_author_link( $comment ) ); ?></span>
